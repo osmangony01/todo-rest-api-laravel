@@ -21,7 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // get api for fetching all todo
 Route::get('/todos', [TodoController::class, 'index']);
 
+// get api for fetching single todo
+Route::get('/todos/{id}',  [TodoController::class, 'singleTodo']);
+
 // post api for inserting todo
 Route::post('/add-todo', [TodoController::class, 'addTodo']);
 
-//
+// put api for updating todo

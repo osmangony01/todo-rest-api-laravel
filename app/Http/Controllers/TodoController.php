@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TodoController extends Controller
 {
@@ -24,6 +25,21 @@ class TodoController extends Controller
             ], 404);
         }
     }
+
+    public function singleTodo($id)
+    {
+        try {
+            $todo = Todo::findOrFail($id);
+            return response()->json($todo, 200);
+        } 
+        catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Todo not found!',
+            ], 404);
+        }
+    }
+
 
     public function addTodo(Request $req)
     {
@@ -64,4 +80,6 @@ class TodoController extends Controller
             }
         }
     }
+
+    
 }
