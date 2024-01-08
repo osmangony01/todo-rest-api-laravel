@@ -81,5 +81,45 @@ class TodoController extends Controller
         }
     }
 
-    
+    public function updateTodo(Request $req, $id){
+        
+        $validator = Validator::make($req->all(), [
+            'title' => 'required|string|max:255',
+            'description' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 422,
+                'errors' => $validator->errors()
+            ], 422);
+        } 
+        else {
+            try {
+                $todo = Todo::findOrFail($id);
+                $todo->title = $req->title;
+                $todo->description = $req->description;
+
+                if ($todo->save()) {
+                    return response()->json([
+                        'status' => 202,
+                        'message' => 'Todo updated successfully'
+                    ], 200);
+                } 
+                else {
+                    return response()->json([
+                        'status' => 500,
+                        'message' => 'Something went wrong!'
+                    ], 500);
+                }
+            } 
+            catch (ModelNotFoundException $exception) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Todo not found!',
+                ], 404);
+            }
+            
+        }
+    }
 }

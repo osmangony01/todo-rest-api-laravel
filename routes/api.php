@@ -28,3 +28,5 @@ Route::get('/todos/{id}',  [TodoController::class, 'singleTodo']);
 Route::post('/add-todo', [TodoController::class, 'addTodo']);
 
 // put api for updating todo
+Route::put('/update-todo/{id}', [TodoController::class, 'updateTodo']);
+
