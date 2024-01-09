@@ -15,9 +15,10 @@ use App\Http\Controllers\TodoController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
 // get api for fetching all todo
 Route::get('/todos', [TodoController::class, 'index']);
 
@@ -30,3 +31,5 @@ Route::post('/add-todo', [TodoController::class, 'addTodo']);
 // put api for updating todo
 Route::put('/update-todo/{id}', [TodoController::class, 'updateTodo']);
 
+// delete api for deleting todo
+Route::delete('/delete-todo/{id}', [TodoController::class, 'deleteTodo']);

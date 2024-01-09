@@ -43,13 +43,6 @@ class TodoController extends Controller
 
     public function addTodo(Request $req)
     {
-        // if($req->isMethod('post')){
-        //     $data = $req->all();
-        //     return $data;
-        // }
-
-        //return response()->json(['message' => 'i am post'], 200);
-
         $validator = Validator::make($req->all(), [
             'title' => 'required|string|max:255',
             'description' => 'required'
@@ -120,6 +113,24 @@ class TodoController extends Controller
                 ], 404);
             }
             
+        }
+    }
+
+    public function deleteTodo($id)
+    {
+        try {
+            $todo = Todo::findOrFail($id);
+            $todo->delete();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Todo deleted successful',
+            ], 404);
+        } 
+        catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Todo not found!',
+            ], 404);
         }
     }
 }
